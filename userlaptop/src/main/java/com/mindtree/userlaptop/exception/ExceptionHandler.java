@@ -1,0 +1,45 @@
+package com.mindtree.userlaptop.exception;
+
+import java.sql.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.ModelAndView;
+
+public class ExceptionHandler  {
+
+	
+
+
+	@Value("${spring.application.name}")
+	private String appliactionName;
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ModelAndView exceptionHandler(HttpServletRequest req,ControllerException c) {
+		ModelAndView mv= new ModelAndView();
+		mv.addObject("status",HttpStatus.NOT_FOUND.value());
+		mv.addObject("ErrorMessage",c.getMessage());
+		mv.addObject("TimeStamp",new Date(0));
+		mv.addObject("Application_Name",appliactionName);
+		mv.setViewName("Error");
+		System.out.println(appliactionName);
+		return mv;
+		
+	}
+	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ModelAndView exceptionHandler(HttpServletRequest req,Exception e) {
+		ModelAndView mv= new ModelAndView();
+		mv.addObject("status",HttpStatus.NOT_FOUND.value());
+		mv.addObject("ErrorMessage",e.getMessage());
+		mv.addObject("TimeStamp",new Date(0));
+		mv.addObject("Application_Name",appliactionName);
+		mv.setViewName("Error");
+		return mv;
+		
+	}
+
+	
+	
+}
